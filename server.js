@@ -39,6 +39,15 @@ App.post('/api/register', async (req, res) => {
 });
 
 App.post('/login', (req, res) => {
+    const { userName, password } = req.body;
+
+    if(!userName || !password) return res.status(400).send('Invalid Inputs');
+
+    if(!db || !db.users || !db.users.length) return res.status(500).send('ERROR');
+
+    const user = db.users.find(user => user.userName === userName);
+
+    if(!user) return res.status(200).send('Unegistered');
     
 });
 
