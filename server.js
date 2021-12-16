@@ -64,3 +64,7 @@ App.post('/api/register', async (req, res) => {
 App.post('/api/welcome', auth, (req, res) => {
     return res.status(200).send('Welcome 🙌');
 });
+
+App.get('/api/users', (req, res) => {
+    return res.status(200).send(db.getAllUsers());
+});
