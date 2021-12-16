@@ -35,6 +35,6 @@ App.post('/api/login', async (req, res) => {
     res.status(201).send ({ userName, token });
 });
 
-App.post("/api/welcome", auth, (req, res) => {
-    return res.status(200).send("Welcome 🙌 ");
+App.post('/api/welcome', auth, (req, res) => {
+    return res.status(200).send('Welcome 🙌');
 });
