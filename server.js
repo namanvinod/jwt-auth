@@ -68,3 +68,8 @@ App.post('/api/welcome', auth, (req, res) => {
 App.get('/api/users', (req, res) => {
     return res.status(200).send(db.getAllUsers());
 });
+
+App.get('/api/users/:username', (req, res) => {
+    const users = db.getAllUsers() ?? [];
+    return res.status(200).send(users.filter(user => user.userName === req.params.username));
+});
