@@ -1,23 +1,5 @@
 const fs = require('fs');
 
-const users = [
-    {
-        userName: 'admin',
-        password: '',
-        isActive: true
-    },
-    {
-        userName: 'nv',
-        password: '$2a$10$OygHHCU0gi2do.Pvti7/zuvAOMhaOFtIzL1fV0pmNvhFTSaQD.aym', //'test123',
-        isActive: true
-    },
-    {
-        userName: 'nvinod',
-        password: '', //'test123',
-        isActive: false
-    }
-];
-
 const projectFolderPath = '/Technical/Projects/Node/jwt-auth';
 const userDBFolderName = '/DB/users';
 const userDBFolderPath = projectFolderPath + userDBFolderName;
@@ -62,7 +44,6 @@ const getAllUsers = () => {
 dbInit();
   
 module.exports = {
-    users,
     addUsers,
     getAllUsers
 };
