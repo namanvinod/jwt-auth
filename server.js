@@ -16,15 +16,24 @@ App.post('/api/login', async (req, res) => {
 
     if(!userName || !password) return res.status(400).send('Invalid Inputs');
 
-    if(!db || !db.users || !db.users.length) return res.status(500).send('ERROR');
+    if(!db) {
+        console.log('No DB Found');
+        return res.status(500).send('ERROR');
+    }
 
-    const user = db.users.find(user => user.userName === userName);
+    const users = getAllUsers();
 
-    if(!user) return res.status(200).send('Unegistered');
+    if(!users || !users.length) {
+        console.log('No Users Found');
+        return res.status(500).send('ERROR');
+    }
+
+    const user = users.find(user => user.userName === userName);
+    if(!user) return res.status(200).send('Unregistered User');
 
     const userValid = await bcrypt.compare(password, user.password);
 
-    if(!userValid) res.status(400).send('Invalid');
+    if(!userValid) res.status(400).send('Invalid User Credentials');
     
     const token = jwt.sign(
         { userName },
@@ -32,7 +41,7 @@ App.post('/api/login', async (req, res) => {
         { expiresIn: '2h' }
     );
 
-    res.status(201).send ({ userName, token });
+    res.status(200).send ({ userName, token });
 });
 
 App.post('/api/register', async (req, res) => {
@@ -62,7 +71,7 @@ App.post('/api/register', async (req, res) => {
 });
 
 App.post('/api/welcome', auth, (req, res) => {
-    return res.status(200).send('Welcome 🙌');
+    return res.status(200).send('Welcome!');
 });
 
 App.get('/api/users', (req, res) => {
@@ -70,6 +79,8 @@ App.get('/api/users', (req, res) => {
 });
 
 App.get('/api/users/:username', (req, res) => {
-    const users = db.getAllUsers() ?? [];
+    const users = getAllUsers();
     return res.status(200).send(users.filter(user => user.userName === req.params.username));
 });
+
+const getAllUsers = () => db.getAllUsers() ?? [];
