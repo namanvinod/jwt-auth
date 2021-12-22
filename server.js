@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const express = require('express');
+require('dotenv').config({ path: `${__dirname}\\env\\app${process.env.NODE_ENV ?`.${process.env.NODE_ENV.trim()}`: ''}.env` }); 
 
 const auth = require('./auth');
 const db = require('./database');
@@ -9,7 +10,7 @@ const App = express();
 
 App.use(express.json());
 
-App.listen(1000, () => console.log('Server Started at 1000'));
+App.listen(process.env.PORT, () => console.log(`Server Started at ${process.env.PORT}, in ${process.env.NODE_ENV} environment`));
 
 App.post('/api/login', async (req, res) => {
     const { userName, password } = req.body;

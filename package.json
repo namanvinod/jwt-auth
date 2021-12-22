@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "e2e": "cypress open",
-    "dev": "nodemon server.js"
+    "e2e": "SET NODE_ENV=test& cypress open",
+    "dev": "SET NODE_ENV=dev& node server.js",
+    "debug": "SET NODE_ENV=debug& nodemon server.js"
   },
   "keywords": [],
   "author": "",
