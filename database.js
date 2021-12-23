@@ -1,8 +1,7 @@
 const fs = require('fs');
 
-const projectFolderPath = '/Technical/Projects/Node/jwt-auth';
-const userDBFolderName = '/DB/users';
-const userDBFolderPath = projectFolderPath + userDBFolderName;
+const userDBFolderName = `/DB/${process.env.NODE_ENV ? `${process.env.NODE_ENV}`: ''}`;
+const userDBFolderPath = __dirname + userDBFolderName;
 
 const usersFileName = '/users.txt';
 const userDBFilePath = userDBFolderPath + usersFileName;
@@ -12,6 +11,10 @@ const dbInit = () => {
         if (!fs.existsSync(userDBFolderPath)) {
             console.log('Creating DB Folder');
             fs.mkdirSync(userDBFolderPath, { recursive: true });
+        }
+        if(process.env.NODE_ENV === 'test') {
+            fs.writeFileSync(userDBFilePath, '');
+            console.log('Cleaning Test DB');
         }
     } catch (error) {
         console.error('Error While Creating DB', error);
