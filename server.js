@@ -73,11 +73,11 @@ App.post('/api/welcome', auth, (req, res) => {
     return res.status(200).send('Welcome!');
 });
 
-App.get('/api/users', (req, res) => {
+App.get('/api/users', auth, (_, res) => {
     return res.status(200).send(getAllUsers());
 });
 
-App.get('/api/users/:username', (req, res) => {
+App.get('/api/users/:username', auth, (req, res) => {
     const users = getAllUsers();
     return res.status(200).send(users.filter(user => user.userName === req.params.username));
 });
